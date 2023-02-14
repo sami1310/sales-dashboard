@@ -6,6 +6,10 @@ from .models import SalesData, Category, Region, Month
 
 
 def home_page(request):
+    return render(request, 'base.html')
+
+
+def dash_board(request):
     sales_data = SalesData.objects.all()
     labels = []
     data = []

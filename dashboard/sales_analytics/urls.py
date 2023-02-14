@@ -1,6 +1,9 @@
 from django.urls import path
-from . import views 
+from . import views
+
+app_name = 'sales_analytics'
 
 urlpatterns = [
-    path('',views.home_page,name='home_page')
+    path('', views.dash_board, name='dash_board'),
+    path('home/', views.home_page, name='home'),
 ]
