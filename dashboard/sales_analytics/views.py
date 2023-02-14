@@ -6,5 +6,17 @@ from .models import SalesData, Category, Region, Month
 
 
 def home_page(request):
+    sales_data = SalesData.objects.all()
+    labels = []
+    data = []
+    for entry in sales_data:
+        label = entry.category.category_name + ' - ' + \
+            entry.region.region_name + ' - ' + entry.month.month_name
+        labels.append(label)
+        data.append(entry.sales)
+        context = {
+            'labels': labels,
+            'data': data,
+        }
 
-    return render(request, 'dashboard.html')
+    return render(request, 'dashboard.html', context)
