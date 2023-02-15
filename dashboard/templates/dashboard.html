@@ -1,31 +1,10 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
+{% block title %} GADGET'S HOME PAGE{% endblock title %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style type="text/css">
-        .chartBox {
-            width: 1600px;
-            height: 500px;
-
-        }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-    <title>Sales Chart</title>
-</head>
-
-<body>
-
-    <div class="chartBox">
-        <canvas id="salesChart"></canvas>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% block content %}
 
     <script>
-        const ctx = document.getElementById('salesChart').getContext('2d');
+        const ctx = document.getElementById('myAreaChart').getContext('2d');
         const salesData = {
             labels: {{ labels| safe }},
         datasets: [{
@@ -67,6 +46,4 @@
 
         });
     </script>
-</body>
-
-</html>
+{%endblock %}
