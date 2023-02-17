@@ -12,6 +12,7 @@ def home_view(request):
 
 def dash_board(request):
 
+    # queryset to generate profits per month
     # grouping by months in values[...] and aggregating total profit that was grouped by months
     # example output for this queryset --> {'month__month_name': 'March', 'total_profit': 3500.0}
     queryset = SalesData.objects.values('month__month_name').annotate(
@@ -23,8 +24,16 @@ def dash_board(request):
     labels = [data['month__month_name'] for data in queryset]
     data = [data['total_profit'] for data in queryset]
 
+    # queryset2 to generate profits per region chart
+    # Region in x-axis Profit in y-axis
+    queryset2 = SalesData.objects.values(
+        'region__region_name').annotate(total_profit=Sum('profit'))
+    labels2 = [data['region__region_name'] for data in queryset2]
+    data2 = [data['total_profit'] for data in queryset2]
+
     total_profit = SalesData.objects.aggregate(
         total_profit=Sum('profit'))['total_profit']
+
     average_profit = SalesData.objects.aggregate(avg_profit=Avg('profit'))
     avg_profit = average_profit['avg_profit']
 
@@ -39,6 +48,8 @@ def dash_board(request):
     context = {
         'labels': labels,
         'data': data,
+        'labels2': labels2,
+        'data2': data2,
         'total_profit': total_profit,
         'avg_profit': avg_profit,
         'total_product_sales': total_product_sales,

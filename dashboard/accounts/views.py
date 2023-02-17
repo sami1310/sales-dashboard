@@ -29,3 +29,23 @@ def logout_view(request):
     else:
         logout(request)
         return redirect('sales_analytics:home_view')
+
+# view for signup
+
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+
+            return redirect('sales_analytics:dash_board')
+
+        else:
+            form = UserCreationForm()
+            return render(request, 'signup.html', {'form': form})
+
+    else:
+        form = UserCreationForm()
+        return render(request, 'signup.html', {'form': form})

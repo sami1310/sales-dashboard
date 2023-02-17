@@ -89,7 +89,7 @@
 <div class="row">
 
   <!-- Area Chart -->
-  <div class="col-xl-8 col-lg-7">
+  <div class="col-xl-8 col-lg-8">
       <div class="card shadow mb-4">
           <!-- Card Header - Dropdown -->
           <div
@@ -129,27 +129,47 @@
           <!-- Card Header - Dropdown -->
           <div
               class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <h6 class="m-0 font-weight-bold text-primary">Select Filter to Generate Overview</h6>
-              <div class="dropdown no-arrow">
-                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                      aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Filters:</div>
-                      <a class="dropdown-item" href="{% url 'sales_analytics:category_chart' %}">Sales by Category</a>
-                      <a class="dropdown-item" href="#">Sales by Region</a>
-                      <a class="dropdown-item" href="#">Sales by Month</a>
-                  </div>
-              </div>
+              <h6 class="m-0 font-weight-bold text-primary">Profit by Regions</h6>
+              
           </div>
           <!-- Card Body -->
           <div class="card-body">
               <div class="chart-pie pt-4 pb-2">
                   <canvas id="myPieChart"></canvas>
-                  {% block piechart %}
-                  {%endblock %}
+                  <script>
+                    const ctx2 = document.getElementById('myPieChart').getContext('2d');
+                    const polarChart = new Chart(ctx2, {
+                        type: 'polarArea',
+                        data: {
+                            labels: {{ labels2|safe }},
+                            datasets: [{
+                                label: 'Total Profit',
+                                data: {{ data2|safe }},
+                                backgroundColor: [
+                                'rgba(255, 99, 132, 0.5)',
+                                'rgba(54, 162, 235, 0.5)',
+                                'rgba(255, 206, 86, 0.5)',
+                                'rgba(75, 192, 192, 0.5)',
+                                'rgba(153, 102, 255, 0.5)',
+                                'rgba(255, 159, 64, 0.5)'
+                              ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            legend: {
+                              position: 'right'
+                            },
+                            scale: {
+                                ticks: {
+                                  beginAtZero: true
+                                },
+                                reverse: false
+                              }
+                            }
+                          });
+                  </script>
+                  
               </div>
               <div class="mt-4 text-center small">
                   <span class="mr-2">
