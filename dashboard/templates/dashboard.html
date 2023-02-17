@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
-{% block title %} GADGET'S HOME PAGE{% endblock title %}
+{% block title %} Dashboard {% endblock title %}
+
 
 {% block content %}
-
+<canvas id="profitChart"></canvas>
     <script>
         const ctx = document.getElementById('profitChart').getContext('2d');
         const myChart = new Chart(ctx, {
@@ -20,3 +21,4 @@
 
     </script>
 {%endblock %}
+
