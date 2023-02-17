@@ -1,33 +1,33 @@
 {% extends 'base.html' %}
 
 
-{% block title %} Category Chart {% endblock title %}
+{% block title %} Region Chart {% endblock title %}
 
 {% block content %}
 
 
 <div class="row">
-    <div class="col-xl-7 col-lg-7">
-        <div class="card shadow mb-4" style="height: 550px;">
+    <div class="col-xl-8 col-lg-8">
+        <div class="card shadow mb-4" style="height: 600px;">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Sales by Category</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Sales Count by Region</h6>
             </div>
             <div class="card-body">
                 <div class="chart-area">
                     <div class="row">
                         <div class="col-xl-12">
-                            <canvas id="categoryChart" style="width: 400px; height: 400px;"></canvas>
+                            <canvas id="regionChart" style="width: 450px; height: 450px;"></canvas>
                         </div>
                     </div>
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                     <script>
-                        var ctx = document.getElementById('categoryChart').getContext('2d');
+                        var ctx = document.getElementById('regionChart').getContext('2d');
                         var myChart = new Chart(ctx, {
-                            type: 'pie',
+                            type: 'doughnut',
                             data: {
                                 labels: {{ labels|safe }},
                                 datasets: [{
-                                    label: 'Sales by Category',
+                                    label: 'Sales Count by Region',
                                     data: {{ data|safe }},
                                     backgroundColor: [
                                         'rgba(255, 99, 132, 0.6)',
@@ -36,7 +36,7 @@
                                         'rgba(75, 192, 192, 0.6)',
                                         'rgba(153, 102, 255, 0.6)',
                                         'rgba(255, 159, 64, 0.6)',
-                                        'rgba(0, 100, 0, 0.6)'
+                                        'rgba(255, 99, 132, 0.6)'
                                     ],
                                     borderWidth: 1
                                 }]
@@ -49,8 +49,9 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Sales by Category'
+                                    text: 'Sales Count by Region'
                                 },
+                                cutoutPercentage: 50
                             }
                         });
                     </script>
@@ -58,36 +59,7 @@
             </div>
         </div>
     </div>
-
-    <div class="col-lg-5 mb-4">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">Sales</h6>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Category</th>
-                  <th>Total Sales</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for category in categories %}
-                <tr>
-                  <td>{{ category.category }}</td>
-                  <td>{{ category.total_sale }}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
 </div>
 
+
 {%endblock %}
-
-

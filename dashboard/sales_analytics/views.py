@@ -69,22 +69,50 @@ def category_filter(request):
     # taking category and sales as label field as x-axis and y-axis
     labels = [data['category__category_name'] for data in queryset]
     data = [data['total_sale'] for data in queryset]
+
+    # creating a list of dictionaries for each category and its total sales
+    # output [{'category': 'Sports', 'total_sale': 12}, {'category': 'Electronics', 'total_sale': 14}..,.]
+    categories = [{'category': labels[i], 'total_sale': data[i]}
+                  for i in range(len(labels))]
+
     context = {
         'labels': labels,
         'data': data,
+        'categories': categories,
     }
 
     return render(request, 'category_chart.html', context)
 
 
-def components(request):
-    total_profit = SalesData.objects.aggregate(
-        total_profit=Sum('profit'))['total_profit']
-    average_profit = SalesData.objects.aggregate(avg_profit=Avg('profit'))
+def region_filter(request):
 
+    # output by this query --> {'category__category_name': 'Sports', 'total_sale': 12}
+    queryset = SalesData.objects.values(
+        'region__region_name').annotate(total_sale=Sum('sales'))
+
+    # taking category and sales as label field as x-axis and y-axis
+    labels = [data['region__region_name'] for data in queryset]
+    data = [data['total_sale'] for data in queryset]
     context = {
-        'total_profit': total_profit,
-        'average_profit': average_profit,
+        'labels': labels,
+        'data': data,
     }
 
-    return render(request, 'dashboard.html', context)
+    return render(request, 'region_chart.html', context)
+
+
+def month_filter(request):
+
+    # output by this query --> {'category__category_name': 'Sports', 'total_sale': 12}
+    queryset = SalesData.objects.values(
+        'month__month_name').annotate(total_sale=Sum('sales'))
+
+    # taking category and sales as label field as x-axis and y-axis
+    labels = [data['month__month_name'] for data in queryset]
+    data = [data['total_sale'] for data in queryset]
+    context = {
+        'labels': labels,
+        'data': data,
+    }
+
+    return render(request, 'month_chart.html', context)

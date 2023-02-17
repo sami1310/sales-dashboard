@@ -44,7 +44,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html"> <!--will use it later -->
+                <a class="nav-link" href="{% url 'sales_analytics:dash_board'%}"> <!--will use it later -->
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -63,9 +63,9 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Filters:</h6>
-                        <a class="collapse-item" href="#">Sales by Category</a>
-                        <a class="collapse-item" href="#">Sales by Region</a>
-                        <a class="collapse-item" href="#">Sales by Month</a>
+                        <a class="collapse-item" href="{% url 'sales_analytics:category_chart'%}">Sales by Category</a>
+                        <a class="collapse-item" href="{% url 'sales_analytics:region_chart'%}">Sales by Region</a>
+                        <a class="collapse-item" href="{% url 'sales_analytics:month_chart'%}">Sales by Month</a>
                     </div>
                 </div>
             </li>
