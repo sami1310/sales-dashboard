@@ -51,47 +51,28 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
+            
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#"data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>Generate Report</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href={% url 'sales_analytics:components' %}>Cards</a>
+                        <h6 class="collapse-header">Filters:</h6>
+                        <a class="collapse-item" href="#">Sales by Category</a>
+                        <a class="collapse-item" href="#">Sales by Region</a>
+                        <a class="collapse-item" href="#">Sales by Month</a>
                     </div>
                 </div>
             </li>
 
             
             <!-- Divider -->
-            <hr class="sidebar-divider">
-
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
-            </li>
-
-
+            
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -126,37 +107,26 @@
                     <ul class="navbar-nav ml-auto">
 
                         {% if user.is_authenticated %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">{{ user.get_username }}</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <hr class="dropdown-divider" />
-                                </li>
-                                <li><a class="dropdown-item" href="#">log out</a></li>
-                            </ul>
-                        </li>
-                        {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">log in</a></li>
-                        {% endif %}
-
-
-                        <!-- Nav Item - User Information -->
-                        <!--<li class="nav-item dropdown no-arrow">
+                        <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log In</a>-->
-
-                            
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.get_username }}</span>
+                            </a>
                             <!-- Dropdown - User Information -->
-                            <!--<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="{% url 'accounts:logout' %}" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
+                                    LogOut
                                 </a>
                             </div>
-                        </li>-->
+                        </li>
+                        {% else %}
+                        
+                        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">log in</a></li>
+                        {% endif %}
 
                     </ul>
 
@@ -219,7 +189,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="{% url 'accounts:logout' %}">Logout</a>
                 </div>
             </div>
         </div>
