@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # registaring the new app
     'sales_analytics.apps.SalesAnalyticsConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [

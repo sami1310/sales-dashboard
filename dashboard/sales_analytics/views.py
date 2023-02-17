@@ -6,6 +6,10 @@ from django.db.models import Avg
 # Create your views here.
 
 
+def home_view(request):
+    return render(request, 'base.html')
+
+
 def dash_board(request):
 
     # grouping by months in values[...] and aggregating total profit that was grouped by months

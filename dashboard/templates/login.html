@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %} login {% endblock title %}
+
+{% block content %}
+
+<style>
+    .login-form {
+      width: 300px;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 5px;
+    }
+  </style>
+  
+  <section class="py-5 container">
+    <div class="login-form">
+      <form method="post">
+        {% csrf_token %}
+        {{signin_form.as_p}}
+        <button class="btn btn-info" type="submit">log in</button>
+      </form>
+    </div>
+  </section>
+  
+
+{% endblock content %}
