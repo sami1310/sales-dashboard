@@ -93,9 +93,14 @@ def region_filter(request):
     # taking category and sales as label field as x-axis and y-axis
     labels = [data['region__region_name'] for data in queryset]
     data = [data['total_sale'] for data in queryset]
+
+    regions = [{'region': labels[i], 'total_sale': data[i]}
+               for i in range(len(labels))]
+
     context = {
         'labels': labels,
         'data': data,
+        'regions': regions,
     }
 
     return render(request, 'region_chart.html', context)
@@ -110,9 +115,13 @@ def month_filter(request):
     # taking category and sales as label field as x-axis and y-axis
     labels = [data['month__month_name'] for data in queryset]
     data = [data['total_sale'] for data in queryset]
+
+    months = [{'month': labels[i], 'total_sale': data[i]}
+              for i in range(len(labels))]
     context = {
         'labels': labels,
         'data': data,
+        'months': months,
     }
 
     return render(request, 'month_chart.html', context)

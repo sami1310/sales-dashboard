@@ -34,7 +34,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" >
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fa-thin fa-chart-column"></i>
+                    <i class="fa-sharp fa-regular fa-chart-simple"></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">Sales Dashboard</div>
             </a>
@@ -44,7 +44,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'sales_analytics:dash_board'%}"> <!--will use it later -->
+                <a class="nav-link" href="{% url 'sales_analytics:dash_board'%}"> 
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -95,7 +95,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.get_username }}</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 large">
+                                    <strong>Welcome Back, {{ user.get_username }}!</strong></span>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -104,13 +105,13 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{% url 'accounts:logout' %}" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    LogOut
+                                    Log Out
                                 </a>
                             </div>
                         </li>
                         {% else %}
                         
-                        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">log in</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}"><strong>log in</strong></a></li>
                         {% endif %}
 
                     </ul>
