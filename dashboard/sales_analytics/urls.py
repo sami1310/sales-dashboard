@@ -9,6 +9,7 @@ urlpatterns = [
     path('category_chart/', views.category_filter, name='category_chart'),
     path('region_chart/', views.region_filter, name='region_chart'),
     path('month_chart/', views.month_filter, name='month_chart'),
+    path('sales_by_date/', views.sales_data_by_date, name='by_date')
     # path('components/', views.components, name='components'),
 
 ]

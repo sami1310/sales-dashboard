@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import SalesData, Category, Region, Month
 from django.db.models import Sum
 from django.db.models import Avg
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -10,6 +12,7 @@ def home_view(request):
     return render(request, 'base.html')
 
 
+@login_required(login_url='../accounts/login/')
 def dash_board(request):
 
     # queryset to generate profits per month
@@ -60,6 +63,7 @@ def dash_board(request):
     return render(request, 'dashboard.html', context)
 
 
+@login_required(login_url='../accounts/login/')
 def category_filter(request):
 
     # output by this query --> {'category__category_name': 'Sports', 'total_sale': 12}
@@ -72,6 +76,7 @@ def category_filter(request):
 
     # creating a list of dictionaries for each category and its total sales
     # output [{'category': 'Sports', 'total_sale': 12}, {'category': 'Electronics', 'total_sale': 14}..,.]
+    # this is needed for generating the table beside the chart
     categories = [{'category': labels[i], 'total_sale': data[i]}
                   for i in range(len(labels))]
 
@@ -84,6 +89,7 @@ def category_filter(request):
     return render(request, 'category_chart.html', context)
 
 
+@login_required(login_url='../accounts/login/')
 def region_filter(request):
 
     # output by this query --> {'category__category_name': 'Sports', 'total_sale': 12}
@@ -106,6 +112,7 @@ def region_filter(request):
     return render(request, 'region_chart.html', context)
 
 
+@login_required(login_url='../accounts/login/')
 def month_filter(request):
 
     # output by this query --> {'category__category_name': 'Sports', 'total_sale': 12}
@@ -125,3 +132,12 @@ def month_filter(request):
     }
 
     return render(request, 'month_chart.html', context)
+
+
+@login_required(login_url='../accounts/login/')
+def sales_data_by_date(request):
+    sales_data = []
+    if request.method == 'POST':
+        date = request.POST.get('date')
+        sales_data = SalesData.objects.filter(sale_date=date)
+    return render(request, 'sales_date.html', {'sales_data': sales_data})

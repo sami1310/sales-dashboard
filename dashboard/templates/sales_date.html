@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %} Sales By Date {% endblock title %}
+
+{% block content%}
+<style>
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+    }
+  </style>
+{% if sales_data %}
+  <h3>Sales Data for {{ sales_data.0.sale_date }}</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Region</th>
+        <th>Sales</th>
+        <th>Profit</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sale in sales_data %}
+        <tr>
+          <td>{{ sale.category.category_name }}</td>
+          <td>{{ sale.region.region_name }}</td>
+          <td>{{ sale.sales }}</td>
+          <td>{{ sale.profit }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <h4>Filter Sales Data by Date</h4>
+  <form method="post">
+    {% csrf_token %}
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date">
+    <button type="submit" class="btn btn-success">Filter</button>
+  </form>
+{% endif %}
+
+{%endblock%}
