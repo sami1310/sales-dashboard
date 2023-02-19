@@ -52,7 +52,7 @@ def dash_board(request):
     # getting region that sold the highest amount of products
     highest_sale = SalesData.objects.values('region__region_name').annotate(
         total_sales=Sum('sales')).order_by('-total_sales').first()
-    region_name = highest_sale['region__region_name']
+    region_name = highest_sale['region__region_name'] if highest_sale else None
 
     # data and labels are being passed as context in the dashboard.html file
     context = {
