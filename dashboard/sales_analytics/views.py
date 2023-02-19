@@ -37,15 +37,19 @@ def dash_board(request):
     labels2 = [data['region__region_name'] for data in queryset2]
     data2 = [data['total_profit'] for data in queryset2]
 
+    # generating total profit by taking data from the database
     total_profit = SalesData.objects.aggregate(
         total_profit=Sum('profit'))['total_profit']
 
+    # generating average profit by taking data from the database
     average_profit = SalesData.objects.aggregate(avg_profit=Avg('profit'))
     avg_profit = average_profit['avg_profit']
 
+    # generating total sales by taking data from the database
     total_product_sales = SalesData.objects.aggregate(
         total_sales=Sum('sales'))['total_sales']
 
+    # getting region that sold the highest amount of products
     highest_sale = SalesData.objects.values('region__region_name').annotate(
         total_sales=Sum('sales')).order_by('-total_sales').first()
     region_name = highest_sale['region__region_name']
@@ -139,6 +143,7 @@ def month_filter(request):
 
 @login_required(login_url='../accounts/login/')
 def sales_data_by_date(request):
+    # function to generate sales data for selected 'from' to 'to' date given by the user input
     sales_data = []
     if request.method == 'POST':
         start_date = request.POST.get('start_date')
@@ -151,7 +156,9 @@ def sales_data_by_date(request):
     return render(request, 'sales_date.html', {'sales_data': sales_data})
 
 
+@login_required(login_url='../accounts/login/')
 def sales_data_excel(request):
+    # function to generate sales data for selected 'from' to 'to' date given by the user input in excel sheet
     start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
     start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
