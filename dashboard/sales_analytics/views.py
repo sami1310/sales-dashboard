@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from openpyxl import Workbook
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 
@@ -148,3 +149,37 @@ def sales_data_by_date(request):
             sale_date__range=(start_date, end_date)).order_by('sale_date')
 
     return render(request, 'sales_date.html', {'sales_data': sales_data})
+
+
+def sales_data_excel(request):
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+    start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+    end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
+    sales_data = SalesData.objects.filter(
+        sale_date__range=(start_date, end_date)).order_by('sale_date')
+
+    # Creating a new workbook and add a worksheet
+    workbook = Workbook()
+    worksheet = workbook.active
+
+    # Writing the column headers to the worksheet
+    worksheet.append(['Date', 'Category', 'Region', 'Sales', 'Profit'])
+
+    # Writing the sales data to the worksheet
+    for sale in sales_data:
+        worksheet.append([
+            sale.sale_date,
+            sale.category.category_name,
+            sale.region.region_name,
+            sale.sales,
+            sale.profit,
+        ])
+
+    # Creating an HTTP response with the Excel file
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=sales_data.xlsx'
+    workbook.save(response)
+
+    return response

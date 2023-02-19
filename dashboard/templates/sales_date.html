@@ -9,32 +9,14 @@
   th, td {
     padding: 10px;
   }
+  .filter-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+ 
 </style>
-{% if sales_data %}
-  <h3>Sales Data between {{ sales_data.0.sale_date }} and {{ sales_data.last.sale_date }}</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Category</th>
-        <th>Region</th>
-        <th>Sales</th>
-        <th>Profit</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for sale in sales_data %}
-        <tr>
-          <td>{{ sale.sale_date }}</td>
-          <td>{{ sale.category.category_name }}</td>
-          <td>{{ sale.region.region_name }}</td>
-          <td>{{ sale.sales }}</td>
-          <td>{{ sale.profit }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-{% else %}
+<div class="filter-box">
   <h4>Filter Sales Data by Date Range</h4>
   <form method="post">
     {% csrf_token %}
@@ -44,47 +26,46 @@
     <input type="date" id="end_date" name="end_date">
     <button type="submit" class="btn btn-success">Filter</button>
   </form>
-{% endif %}
-{%endblock%}
+</div>
 
-<!--
-  <style>
-    table {
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 10px;
-    }
-  </style>
-{% if sales_data %}
-  <h3>Sales Data for {{ sales_data.0.sale_date }}</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Category</th>
-        <th>Region</th>
-        <th>Sales</th>
-        <th>Profit</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for sale in sales_data %}
-        <tr>
-          <td>{{ sale.category.category_name }}</td>
-          <td>{{ sale.region.region_name }}</td>
-          <td>{{ sale.sales }}</td>
-          <td>{{ sale.profit }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-{% else %}
-  <h4>Filter Sales Data by Date</h4>
-  <form method="post">
-    {% csrf_token %}
-    <label for="date">Date:</label>
-    <input type="date" id="date" name="date">
-    <button type="submit" class="btn btn-success">Filter</button>
-  </form>
-{% endif %}
--->
+  {% if sales_data %}
+    
+    <div class="row">
+      <div class="col-lg-8 mb-4">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Sales Data between {{ sales_data.0.sale_date }} and {{ sales_data.last.sale_date }}</h6>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Region</th>
+                    <th>Sales</th>
+                    <th>Profit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for sale in sales_data %}
+                  <tr>
+                    <td>{{ sale.sale_date }}</td>
+                    <td>{{ sale.category.category_name }}</td>
+                    <td>{{ sale.region.region_name }}</td>
+                    <td>{{ sale.sales }}</td>
+                    <td>{{ sale.profit }}</td>
+                    
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="{% url 'sales_analytics:sales_data_excel' %}?start_date={{ request.POST.start_date }}&end_date={{ request.POST.end_date }}" class="btn btn-primary">Download as Excel</a>   
+  {% endif %}
+{%endblock%}

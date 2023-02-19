@@ -10,7 +10,7 @@ urlpatterns = [
     path('region_chart/', views.region_filter, name='region_chart'),
     path('month_chart/', views.month_filter, name='month_chart'),
     path('sales_by_date/', views.sales_data_by_date, name='by_date'),
-    # path('export_sales_data/', views.export_sales_data, name='export_sales_data')
+    path('sales_data_excel/', views.sales_data_excel, name='sales_data_excel')
     # path('components/', views.components, name='components'),
 
 ]
