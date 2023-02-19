@@ -13,6 +13,9 @@ def login_view(request):
             login(request, user)
 
             return redirect('sales_analytics:dash_board')
+        else:
+            signin_form = AuthenticationForm()
+            return render(request, 'login.html', {'signin_form': signin_form})
 
     else:
         signin_form = AuthenticationForm()
