@@ -5,6 +5,8 @@ from django.db.models import Sum
 from django.db.models import Avg
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
+from openpyxl import Workbook
 # Create your views here.
 
 
@@ -138,6 +140,11 @@ def month_filter(request):
 def sales_data_by_date(request):
     sales_data = []
     if request.method == 'POST':
-        date = request.POST.get('date')
-        sales_data = SalesData.objects.filter(sale_date=date)
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+        end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
+        sales_data = SalesData.objects.filter(
+            sale_date__range=(start_date, end_date)).order_by('sale_date')
+
     return render(request, 'sales_date.html', {'sales_data': sales_data})
